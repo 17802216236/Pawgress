@@ -7,20 +7,21 @@
 import SwiftUI
 
 struct ContentView: View {
-
+    @EnvironmentObject var authService: AuthenticationService
+    
     var body: some View {
-        
-        Image("rabbits")
-            .resizable()
-            .cornerRadius(20.0)
-            .aspectRatio(contentMode: .fit)
-            .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-        
-        Text("Welcome to Pawgress!")
-
+        Group {
+            if authService.isAuthenticated {
+                MainTabView()
+            } else {
+                LoginView()
+            }
+        }
     }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(AuthenticationService())
 }
+
